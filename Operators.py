@@ -5,3 +5,9 @@ print ( 2 + 4)
 print ( 2 - 4)
 print ( 2 * 4)
 print ( 8 / 4)
+
+# augmented assignment operator
+x = 1
+x += 2 # so here "+=" is a augmented assignment operator, so how does it work, here "x +=2" 
+       # means x = x+2 ;
+print (x)
