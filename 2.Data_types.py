@@ -3,3 +3,5 @@ print(type(2.1))
 print(type(0))
 print(type("hello"))
 print(type(2))
+
+
