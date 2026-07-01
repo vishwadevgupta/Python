@@ -1,6 +1,6 @@
 #Dictionary
 # it is a data structure , where we store the data in key value pair
-
+# in dictionaries keys should be unique and immutable
 Dictionary = {
     'a' : [1,2,3],
     'b' : 'vishu',
