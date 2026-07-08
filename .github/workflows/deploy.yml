@@ -1,14 +1,14 @@
-name: Check Python Indentation
+name: Auto Format Python Indentation
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
-  check-indentation:
+  auto-format:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to push the reformatted code back to GitHub
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,6 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install black
 
-      - name: Check Indentation and Formatting
+      - name: Reformat Files
         run: |
-          black --check .
+          black .
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'style: auto-reformat Python indentation'
