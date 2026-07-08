@@ -1,4 +1,4 @@
-name: Auto Format Python Indentation
+name: Auto Format All Files
 
 on:
   push:
@@ -8,26 +8,37 @@ jobs:
   auto-format:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required to push the reformatted code back to GitHub
+      contents: write # Required to push fixes back to GitHub
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # --- SECTION 1: FIX PYTHON FILES ---
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Black Formatter
+      - name: Install and Run Black (Python Formatter)
         run: |
           python -m pip install --upgrade pip
           pip install black
+          black . # Fixes ALL Python files with issues
 
-      - name: Reformat Files
+      # --- SECTION 2: FIX OTHER FILES (HTML, JS, JSON, MD, etc.) ---
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install and Run Prettier (Web/Config Formatter)
         run: |
-          black .
+          npm install -g prettier
+          prettier --write "**/*.{js,ts,json,md,html,css,yml,yaml}" --ignore-path .gitignore || true
+          # Note: "|| true" ensures the workflow keeps going even if some files have syntax errors
 
+      # --- SECTION 3: PUSH ALL FIXES ---
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'style: auto-reformat Python indentation'
+          commit_message: 'style: auto-reformat all files with issues'
