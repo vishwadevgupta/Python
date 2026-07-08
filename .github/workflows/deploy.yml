@@ -26,18 +26,6 @@ jobs:
           pip install black
           black .
 
-      # --- SECTION 2: FIX OTHER FILES (HTML, JS, JSON, MD, etc.) ---
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install and Run Prettier
-        run: |
-          npm install -g prettier
-          # FIX: Explicitly added --ignore-path to skip formatting workflow files
-          prettier --write "**/*.{js,ts,json,md,html,css,yml,yaml}" --ignore-path .gitignore --ignore-path .github || true
-
       # --- SECTION 3: PUSH ALL FIXES ---
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
