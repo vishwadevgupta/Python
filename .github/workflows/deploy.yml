@@ -1,16 +1,28 @@
-name: deploy project
+name: Check Python Indentation
 
 on:
-  push: 
-    branches:
-      - main
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
+  check-indentation:
     runs-on: ubuntu-latest
-    container: 
-      image: node:20
     steps:
-      - uses: actions/checkout@v3
-      
-        
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Black Formatter
+        run: |
+          python -m pip install --upgrade pip
+          pip install black
+
+      - name: Check Indentation and Formatting
+        run: |
+          black --check .
