@@ -1,4 +1,4 @@
-#BOOLEANS
+# BOOLEANS
 
 # so booleans only stores two values , either true or false like
 
