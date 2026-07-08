@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write   # Required to push normal files back to GitHub
-      workflows: write  # FIX: Grants permission to update workflow files if they are touched
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
